@@ -12,12 +12,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserRepository userRepository;
 
-//    @GetMapping
-//    public ResponseEntity<UserEntity> getAll() {
-//        return ResponseEntity.ok(userRepository.findAll());
-//    }
-
-
     @PostMapping
     public ResponseEntity<UserEntity> create(@RequestBody UserEntity entity) {
         return ResponseEntity.ok(userRepository.save(entity));
