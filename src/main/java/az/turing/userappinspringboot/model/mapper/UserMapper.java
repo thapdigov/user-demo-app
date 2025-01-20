@@ -2,6 +2,7 @@ package az.turing.userappinspringboot.model.mapper;
 
 import az.turing.userappinspringboot.domain.entity.UserEntity;
 import az.turing.userappinspringboot.model.dto.UserDto;
+import az.turing.userappinspringboot.model.request.CreateUserRequest;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,6 +23,13 @@ public class UserMapper {
                 .username(userEntity.getUsername())
                 .userPassword(userEntity.getUserPassword())
                 .userStatus(userEntity.getUserStatus())
+                .build();
+    }
+
+    public UserEntity toEnt(CreateUserRequest request) {
+        return UserEntity.builder()
+                .username(request.getUsername())
+                .userPassword(request.getPassword())
                 .build();
     }
 }

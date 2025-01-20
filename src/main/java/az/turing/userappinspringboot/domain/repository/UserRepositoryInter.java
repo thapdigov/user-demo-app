@@ -13,9 +13,11 @@ public interface UserRepositoryInter {
 
     UserEntity save(UserEntity userEntity);
 
-    void delete(Long id);
-
     boolean existsByUsername(String username);
 
     boolean existsById(Long id);
+
+    Optional<UserEntity> findByUsername(String username);
+
+    void deleteById(Long id);
 }
