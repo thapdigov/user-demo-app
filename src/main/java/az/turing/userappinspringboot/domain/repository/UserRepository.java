@@ -11,9 +11,17 @@ public class UserRepository {
     private final JdbcTemplate jdbcTemplate;
 
     public UserEntity save(UserEntity userEntity) {
-        String query = "insert into users(userId,username) values(?,?)";
-        jdbcTemplate.update(query, userEntity.getUserId(), userEntity.getUsername());
-        return userEntity;
+        if (userEntity.getUserId() == null) {
+            String query = "insert into users(username,userPassword,userStatus) values(?,?,?)";
+            jdbcTemplate.update(query, userEntity.getUsername(),
+                    userEntity.getUserPassword(), userEntity.getUserStatus());
+            return userEntity;
+        } else {
+            String query = "update users set username=?,userPassword=?,userStatus=? where userId=?";
+            jdbcTemplate.update(query, userEntity.getUsername(), userEntity.getUserPassword()
+                    , userEntity.getUserStatus(), userEntity.getUserId());
+            return userEntity;
+        }
     }
 
 //    public List<UserEntity> findAll() {
