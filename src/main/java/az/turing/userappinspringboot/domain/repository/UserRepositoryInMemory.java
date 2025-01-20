@@ -31,12 +31,16 @@ public class UserRepositoryInMemory implements UserRepositoryInter {
             USERS.add(userEntity);
             return userEntity;
         } else {
-            return null;
+            UserEntity userEntity1 = findById(userEntity.getUserId()).get();
+            userEntity1.setUsername(userEntity.getUsername());
+            userEntity1.setUserPassword(userEntity.getUserPassword());
+            USERS.add(userEntity1);
+            return userEntity1;
         }
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         USERS.stream().filter(userEntity -> userEntity.getUserId().equals(id)).findFirst().ifPresent(USERS::remove);
     }
 
@@ -48,5 +52,11 @@ public class UserRepositoryInMemory implements UserRepositoryInter {
     @Override
     public boolean existsById(Long id) {
         return USERS.stream().anyMatch(userEntity -> userEntity.getUserId().equals(id));
+    }
+
+    @Override
+    public Optional<UserEntity> findByUsername(String username) {
+        return USERS.stream().filter(userEntity -> userEntity.getUsername().
+                equals(username)).findFirst();
     }
 }
