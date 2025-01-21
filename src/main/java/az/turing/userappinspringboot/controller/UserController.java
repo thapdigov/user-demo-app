@@ -39,11 +39,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDto> create(@Valid @RequestBody CreateUserRequest request) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(request));
-        } catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(request));
     }
 
     @PutMapping("/{id}")
