@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @Validated
-@RequestMapping("users/api")
+@RequestMapping("users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -32,7 +32,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-    @GetMapping("/users/{username}")
+    @GetMapping("/all/{username}")
     public ResponseEntity<UserDto> findById(@PathVariable @Email String username) {
         return ResponseEntity.ok(userService.findByUsername(username));
     }
@@ -43,12 +43,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody UpdateUserRequest request) {
+    public ResponseEntity<UserDto> update(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest request) {
         return ResponseEntity.ok(userService.update(id, request));
     }
 
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<UserDto> updatePut(@PathVariable Long id, @RequestBody UserStatus status) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserDto> updatePut(@PathVariable Long id, @RequestParam UserStatus status) {
         return ResponseEntity.ok(userService.updatePut(id, status));
     }
 
