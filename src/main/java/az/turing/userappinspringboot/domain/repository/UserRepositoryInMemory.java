@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
-public class UserRepositoryInMemory implements UserRepositoryInter {
+public class UserRepositoryInMemory implements UserRepository {
 
     private final List<UserEntity> USERS = new ArrayList<>();
     private final AtomicLong atomicLong = new AtomicLong();
@@ -31,11 +31,12 @@ public class UserRepositoryInMemory implements UserRepositoryInter {
             USERS.add(userEntity);
             return userEntity;
         } else {
-            UserEntity userEntity1 = findById(userEntity.getUserId()).get();
-            userEntity1.setUsername(userEntity.getUsername());
-            userEntity1.setUserPassword(userEntity.getUserPassword());
-            USERS.add(userEntity1);
-            return userEntity1;
+            deleteById(userEntity.getUserId());
+            userEntity.setUserId(userEntity.getUserId());
+            userEntity.setUsername(userEntity.getUsername());
+            userEntity.setUserPassword(userEntity.getUserPassword());
+            USERS.add(userEntity);
+            return userEntity;
         }
     }
 

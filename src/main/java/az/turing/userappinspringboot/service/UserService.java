@@ -1,7 +1,7 @@
 package az.turing.userappinspringboot.service;
 
 import az.turing.userappinspringboot.domain.entity.UserEntity;
-import az.turing.userappinspringboot.domain.repository.UserRepositoryInter;
+import az.turing.userappinspringboot.domain.repository.UserDataJpa;
 import az.turing.userappinspringboot.exception.AlreadyExistsException;
 import az.turing.userappinspringboot.exception.InvalidException;
 import az.turing.userappinspringboot.exception.NotFoundException;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Log4j2
 public class UserService {
-    private final UserRepositoryInter userRepository;
+    private final UserDataJpa userRepository;
     private final UserMapper userMapper;
 
     public UserDto create(CreateUserRequest request) {
