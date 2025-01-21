@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class UserRepositoryInPostgres implements UserRepositoryInter {
+public class UserRepositoryInPostgres implements UserRepository {
     private final JdbcTemplate jdbcTemplate;
 
     public List<UserEntity> findAll() {
@@ -26,7 +26,7 @@ public class UserRepositoryInPostgres implements UserRepositoryInter {
     public UserEntity save(UserEntity userEntity) {
         if (userEntity.getUserId() == null) {
             jdbcTemplate.update(UserQuery.insert, userEntity.getUsername()
-                    , userEntity.getUserPassword(), userEntity.getUserStatus());
+                    , userEntity.getUserPassword(), userEntity.getUserStatus().name());
             return userEntity;
         } else {
             jdbcTemplate.update(UserQuery.update, userEntity.getUsername()
@@ -52,6 +52,7 @@ public class UserRepositoryInPostgres implements UserRepositoryInter {
 
     @Override
     public void deleteById(Long id) {
-        findAll().stream().filter(userEntity -> false).findFirst().ifPresent(findAll()::remove);
+        findAll().stream().filter(userEntity -> userEntity.getUserId().equals(id))
+                .findFirst().ifPresent(findAll()::remove);
     }
 }
